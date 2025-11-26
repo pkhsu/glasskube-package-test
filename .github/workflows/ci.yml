@@ -72,6 +72,10 @@ jobs:
           echo "🏗️  Creating package directory: $NEW_VERSION_DIR"
           mkdir -p "$NEW_VERSION_DIR"
           cp "$BASE_VERSION_DIR/package.yaml" "$NEW_VERSION_DIR/package.yaml"
+          
+          # Update chartVersion in the new package.yaml
+          echo "🔄 Updating chartVersion in package.yaml to ${{ env.CLEAN_VERSION }}..."
+          sed -i "s/chartVersion: .*/chartVersion: \"${{ env.CLEAN_VERSION }}\"/" "$NEW_VERSION_DIR/package.yaml"
 
       - name: Commit and Push Changes
         run: |
