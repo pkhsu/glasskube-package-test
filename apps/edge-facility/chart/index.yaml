@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   edge-facility:
   - apiVersion: v2
+    appVersion: 1.0.8
+    created: "2025-11-26T09:51:04.312115648Z"
+    description: A Helm chart for deploying the Sample Web Application
+    digest: ee591754834e3c4e31e22a91bd659f2b38a1b7e9f3222159fc0d2c9a8a5253ed
+    name: edge-facility
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/pkhsu/glasskube-package-test/main/apps/edge-facility/chart/edge-facility-1.0.8.tgz
+    version: 1.0.8
+  - apiVersion: v2
     appVersion: 1.0.7
-    created: "2025-11-26T09:38:14.630199959Z"
+    created: "2025-11-26T09:51:04.311621403Z"
     description: A Helm chart for deploying the Sample Web Application
     digest: a921d23f9821a4208ef84dbd81855d1859115a6327b832ec2f32811ee0cc146c
     name: edge-facility
@@ -13,7 +23,7 @@ entries:
     version: 1.0.7
   - apiVersion: v2
     appVersion: 1.0.6
-    created: "2025-11-26T09:38:14.629609173Z"
+    created: "2025-11-26T09:51:04.311203832Z"
     description: A Helm chart for deploying the Sample Web Application
     digest: bc05fff9cff14f4f3b69521b0e20c4b75f702802da8ac941bda77b1348a08c1c
     name: edge-facility
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/pkhsu/glasskube-package-test/main/apps/edge-facility/chart/edge-facility-1.0.6.tgz
     version: 1.0.6
-generated: "2025-11-26T09:38:14.629167165Z"
+generated: "2025-11-26T09:51:04.310702914Z"

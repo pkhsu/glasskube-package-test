@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://glasskube.dev/schemas/v1/package-manifest.json
+apiVersion: packages.glasskube.dev/v1
+kind: PackageManifest
+name: edge-facility
+scope: Namespaced
+defaultNamespace: edge-facility
+shortDescription: Edge Facility Service
+longDescription: |
+  ## Edge Facility
+  A mock edge facility service for demonstration.
+
+iconUrl: https://cdn-icons-png.flaticon.com/512/919/919825.png
+
+helm:
+  chartName: edge-facility
+  chartVersion: "1.0.8"
+  repositoryUrl: https://raw.githubusercontent.com/pkhsu/glasskube-package-test/main/apps/edge-facility/chart/
+
+values:
+  ingress:
+    enabled: false
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 3000
+  replicaCount: 1
+  image:
+    pullPolicy: IfNotPresent
+
+entrypoints:
+  - name: web-ui
+    serviceName: edge-facility
+    port: 80
+    localPort: 3200
+    scheme: http
+    context: /
+
+references:
+  - label: "Repository"
+    url: "https://github.com/pkhsu/glasskube-package-test/tree/main/apps/edge-facility"
