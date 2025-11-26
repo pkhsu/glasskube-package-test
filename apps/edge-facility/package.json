@@ -1,5 +1,5 @@
 {
-  "name": "eap-distr-simulator",
+  "name": "edge-facility",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

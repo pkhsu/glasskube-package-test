@@ -1,0 +1,73 @@
+name: Release Edge Facility
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version
+        id: get_version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          CLEAN_VERSION=${VERSION#v}
+          echo "CLEAN_VERSION=$CLEAN_VERSION" >> $GITHUB_ENV
+          echo "🚀 Triggered by tag: $VERSION"
+
+      - name: Update Chart.yaml
+        run: |
+          CHART_FILE="apps/edge-facility/chart/Chart.yaml"
+          echo "📊 Updating Chart.yaml to version ${{ env.CLEAN_VERSION }}..."
+          sed -i "s/^version: .*/version: ${{ env.CLEAN_VERSION }}/" "$CHART_FILE"
+          sed -i "s/^appVersion: .*/appVersion: \"${{ env.CLEAN_VERSION }}\"/" "$CHART_FILE"
+
+      - name: Update versions.yaml
+        run: |
+          VERSIONS_FILE="glasskube-packages/packages/edge-facility/versions.yaml"
+          NEW_VERSION="${{ env.VERSION }}+1"
+          echo "📝 Updating versions.yaml with $NEW_VERSION..."
+          
+          # Add new version to list if not exists
+          if ! grep -q "$NEW_VERSION" "$VERSIONS_FILE"; then
+            echo "  - version: \"$NEW_VERSION\"" >> "$VERSIONS_FILE"
+          fi
+          
+          # Update latestVersion
+          sed -i "s/latestVersion: .*/latestVersion: \"$NEW_VERSION\"/" "$VERSIONS_FILE"
+
+      - name: Update index.yaml
+        run: |
+          INDEX_FILE="glasskube-packages/packages/index.yaml"
+          NEW_VERSION="${{ env.VERSION }}+1"
+          echo "📝 Updating index.yaml latestVersion to $NEW_VERSION..."
+          # Update latestVersion for edge-facility block
+          sed -i '/name: edge-facility/,/latestVersion:/ s/latestVersion: .*/latestVersion: "'"$NEW_VERSION"'"/' "$INDEX_FILE"
+
+      - name: Create Package Version
+        run: |
+          PACKAGE_DIR="glasskube-packages/packages/edge-facility"
+          NEW_VERSION_DIR="$PACKAGE_DIR/${{ env.VERSION }}+1"
+          BASE_VERSION_DIR="$PACKAGE_DIR/v1.0.0+1"
+          
+          echo "🏗️  Creating package directory: $NEW_VERSION_DIR"
+          mkdir -p "$NEW_VERSION_DIR"
+          cp "$BASE_VERSION_DIR/package.yaml" "$NEW_VERSION_DIR/package.yaml"
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add .
+          git commit -m "chore(release): update packages for ${{ env.VERSION }}"
+          git push origin HEAD:main

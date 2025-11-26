@@ -5,8 +5,8 @@ packages:
     shortDescription: A simple bookmark manager for self-hosted deployments
     scope: Cluster
     # scope: Namespaced 
-  - name: sample-web-app
+  - name: edge-facility
     iconUrl: https://cdn-icons-png.flaticon.com/512/919/919825.png
     latestVersion: v1.0.0+1
-    shortDescription: A sample Node.js web application
+    shortDescription: Edge Facility Service
     scope: Namespaced 
