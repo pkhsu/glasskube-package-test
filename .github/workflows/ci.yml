@@ -31,6 +31,16 @@ jobs:
           sed -i "s/^version: .*/version: ${{ env.CLEAN_VERSION }}/" "$CHART_FILE"
           sed -i "s/^appVersion: .*/appVersion: \"${{ env.CLEAN_VERSION }}\"/" "$CHART_FILE"
 
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+
+      - name: Package Helm Chart
+        run: |
+          cd apps/edge-facility/chart
+          helm package .
+          # Generate index.yaml, pointing to the raw GitHub URL
+          helm repo index . --url https://raw.githubusercontent.com/pkhsu/glasskube-package-test/main/apps/edge-facility/chart/
+
       - name: Update versions.yaml
         run: |
           VERSIONS_FILE="glasskube-packages/packages/edge-facility/versions.yaml"
