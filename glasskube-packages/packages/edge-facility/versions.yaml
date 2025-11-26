@@ -1,5 +1,6 @@
-latestVersion: "v1.0.6+1"
+latestVersion: "v1.0.7+1"
 versions:
   - version: "v1.0.0+1"
   - version: "v1.0.5+1"
   - version: "v1.0.6+1"
+  - version: "v1.0.7+1"
