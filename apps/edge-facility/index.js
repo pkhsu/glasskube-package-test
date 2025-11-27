@@ -163,7 +163,7 @@ app.get('/', (req, res) => {
             </div>
 
             <div class="footer">
-                Managed by Glasskube
+                Powered by Glasskube
             </div>
         </div>
     </div>
