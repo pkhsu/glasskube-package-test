@@ -7,11 +7,14 @@
 ### 核心技術
 - **Kubernetes**: 容器編排平台
 - **Glasskube**: Kubernetes 套件管理器
-- **GitHub**: 檔案託管和版本控制平台，用於託管套件庫和應用程式檔案
+- **GitHub**: 檔案託管和版本控制平台
+- **GitHub Actions**: CI/CD 自動化工具
+- **GitHub Container Registry (GHCR)**: 容器映像儲存庫
 
 ### 套件定義
 - **YAML**: 用於 Kubernetes 清單和 Glasskube 套件定義
 - **JSON Schema**: 用於 package.yaml 驗證 (https://glasskube.dev/schemas/v1/package-manifest.json)
+- **Helm**: 用於打包和部署 `edge-facility` 應用程式
 
 ### 網路訪問
 - **HTTPS**: 用於存取 GitHub raw 內容的協議
@@ -23,23 +26,21 @@
 - **GitHub 帳號**: 用於存儲和訪問套件庫檔案
 - **Kubernetes 叢集**: 用於測試套件安裝
 - **Glasskube CLI**: 用於與套件和套件庫交互
+- **Helm CLI**: 用於手動測試 Helm Chart (可選)
 
 ### 目錄結構
 ```
 glasskube-package-test/
+├── .github/
+│   └── workflows/             # CI/CD 流程定義
+│       └── ci.yml             # 自動化發布腳本
 ├── apps/                      # 原始應用程式源碼
 │   ├── shiori/                # Shiori 的 K8s 清單檔
-│   │   ├── cluster.yaml
-│   │   ├── deployment.yaml
-│   │   ├── ingress.yaml
-│   │   ├── namespace.yaml
-│   │   ├── persistentvolumeclaim.yaml
-│   │   └── service.yaml
-│   └── sample-web-app/        # Sample Node.js 應用與 Helm
+│   └── edge-facility/         # Edge Facility App (Node.js + Helm)
 │       ├── chart/             # Helm chart 目錄
 │       │   ├── templates/     # Helm 模板
 │       │   ├── Chart.yaml     # Chart 定義
-│       │   └── values.yaml    # 預設值
+│       │   └── values.yaml    # 預設值 (指向 GHCR)
 │       ├── Dockerfile         # 容器映像定義
 │       ├── index.js           # 應用程式代碼
 │       └── package.json       # Node.js 依賴
@@ -47,15 +48,15 @@ glasskube-package-test/
 │   ├── packages/              # 套件定義目錄
 │   │   ├── index.yaml         # 套件庫索引
 │   │   ├── shiori/            # Shiori 套件
-│   │   │   ├── versions.yaml  # 版本列表
-│   │   │   └── v1.0.0+1/      # 特定版本
-│   │   │       └── package.yaml # 套件定義
-│   │   └── sample-web-app/    # Sample Web App 套件
+│   │   └── edge-facility/     # Edge Facility 套件
 │   │       ├── versions.yaml  # 版本列表
-│   │       └── v1.0.0+1/      # 特定版本
-│   │           └── package.yaml # 套件定義
+│   │       └── v1.0.0+1/      # 模板版本 (Template)
+│   │           └── package.yaml # 套件定義模板
 │   └── README.md              # 套件庫文檔
+├── scripts/                   # 輔助腳本
+│   └── demo-release.sh        # Demo 自動發布腳本
 ├── README.md                  # 專案概述
+├── walkthrough.md             # 專案成果導覽
 └── memory-bank/               # 專案記憶庫
 ```
 

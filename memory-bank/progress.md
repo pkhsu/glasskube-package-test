@@ -1,19 +1,30 @@
 # 進度追蹤
 
-## 狀態更新：專案階段性完成與暫停
-本專案已完成基礎 Glasskube 套件庫建置與 GitHub raw URL 整合，程式碼穩定並已標記 1.0.1 版本。近期暫無新開發計畫，進度將暫停於此。未來如需繼續，請參考 activeContext.md 之指引。
+## 狀態更新：Demo 環境與自動化完成
+本專案已成功建立 `edge-facility` 的自動化 Demo 環境。透過 GitHub Actions 實現了從程式碼提交到 Glasskube 套件更新的全自動流程。應用程式 UI 也已優化以支援版本展示。
 
 ## 已完成項目
+
+### Demo 環境與自動化 (New) ✅
+- [x] 建立 `edge-facility` 應用程式 (基於 `sample-web-app` 改良)
+- [x] 實作 GitHub Actions CI/CD (`.github/workflows/ci.yml`)
+    - [x] Docker Build & Push to GHCR
+    - [x] Helm Chart Packaging & Indexing
+    - [x] Glasskube Package Versioning
+- [x] 解決 Helm Repository 結構問題 (Raw GitHub URL hosting)
+- [x] 實作 Demo 自動化腳本 (`scripts/demo-release.sh`)
+- [x] UI 優化：Light Mode, 動態版本顯示, 自訂 Icon
 
 ### 套件庫設置 ✅
 - [x] 建立完整的 Glasskube 套件庫目錄結構
 - [x] 實作 Shiori 套件定義
-- [x] 實作 Sample Web App 套件定義
+- [x] 實作 Sample Web App 套件定義 (已演進為 Edge Facility)
 - [x] 將套件定義 URL 從本地路徑更新為 GitHub raw URLs
 - [x] 移除本地 Caddy 伺服器配置與相關腳本 (`docker-caddy.sh`)
 - [x] 更新 README.md 以反映使用 GitHub raw URLs 的新流程 (包含移除 Caddy 相關說明)
 
 ### 文檔 ✅
+- [x] 建立 Walkthrough 文檔 (`walkthrough.md`)
 - [x] 添加詳細的使用說明文檔
 - [x] 添加套件結構說明
 - [x] 添加故障排除指南

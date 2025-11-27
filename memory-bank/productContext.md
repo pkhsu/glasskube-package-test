@@ -1,15 +1,16 @@
 # Product Context
 
-> **Status:** The initial phase is complete and the codebase is stable (tagged 1.0.1). For future development, see memory-bank/activeContext.md for guidance.
+> **Status:** The demo environment for `edge-facility` is fully automated and operational (v1.0.12). CI/CD pipelines are established.
 
 ## Problem Statement
 Traditional Kubernetes application deployment involves complex Helm charts or YAML manifests that are difficult to maintain and share. Glasskube aims to solve this by providing a standardized package format that is easy to create, distribute, and install.
 
 ## Target Use Cases
-1. **Application Distribution**: Packaging applications like Shiori and Sample Web App for easy distribution and installation
-2. **Local Testing**: Testing packages locally before publishing them to production repositories
-3. **Maintenance Efficiency**: Creating a structure that minimizes duplication and maintenance overhead
-4. **GitOps Integration**: Enabling integration with GitOps workflows for Kubernetes deployments
+1.  **Application Distribution**: Packaging applications like Shiori and Edge Facility for easy distribution and installation
+2.  **Automated Release Demo**: Demonstrating a full CI/CD lifecycle from code change to Glasskube package update using `edge-facility`.
+3.  **Local Testing**: Testing packages locally before publishing them to production repositories
+4.  **Maintenance Efficiency**: Creating a structure that minimizes duplication and maintenance overhead
+5.  **GitOps Integration**: Enabling integration with GitOps workflows for Kubernetes deployments
 
 ## User Journey
 1. User discovers Glasskube packages in a repository

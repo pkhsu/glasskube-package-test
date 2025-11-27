@@ -6,17 +6,35 @@
 
 ```
 glasskube-package-test/
+├── .github/
+│   └── workflows/              # GitHub Actions CI/CD workflows
 ├── apps/                       # 原始應用程式定義
 │   ├── shiori/                 # Shiori Kubernetes 清單檔
-│   └── sample-web-app/         # Sample Web App 與 Helm chart
+│   └── edge-facility/          # Edge Facility App (Node.js + Helm)
 ├── documents/                  # 專案文檔
 │   └── glasskube_architecture_diagram.md  # 系統架構圖 (C4 模型)
-└── glasskube-packages/         # Glasskube 套件庫
-    └── packages/               # 套件定義目錄
-        ├── index.yaml          # 套件庫索引
-        ├── shiori/             # Shiori 套件
-        └── sample-web-app/     # Sample Web App 套件
+├── glasskube-packages/         # Glasskube 套件庫
+│   └── packages/               # 套件定義目錄
+│       ├── index.yaml          # 套件庫索引
+│       ├── shiori/             # Shiori 套件
+│       └── edge-facility/      # Edge Facility 套件
+└── scripts/                    # 輔助腳本 (demo-release.sh)
 ```
+
+## 自動化發布模式 (CI/CD Pattern)
+
+本專案採用 **GitOps + GitHub Actions** 的自動化發布模式：
+
+1.  **觸發 (Trigger)**: 開發者推送 Git Tag (e.g., `v1.0.12`)。
+2.  **建置 (Build)**: GitHub Actions 自動建置 Docker Image 並推送到 GHCR。
+3.  **打包 (Package)**:
+    -   Helm Chart 被打包成 `.tgz`。
+    -   `index.yaml` 被更新以包含新版本的 Chart (GitHub Raw Hosting)。
+4.  **發布 (Release)**:
+    -   Glasskube `versions.yaml` 自動更新。
+    -   Glasskube `package.yaml` 自動從模板 (`v1.0.0+1`) 複製並更新 `chartVersion`。
+    -   Glasskube `index.yaml` 自動更新 `latestVersion`。
+5.  **同步 (Sync)**: 所有變更自動 Commit 回 `main` 分支。
 
 ## 系統架構 (C4 模型)
 

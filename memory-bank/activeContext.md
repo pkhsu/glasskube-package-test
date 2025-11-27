@@ -2,49 +2,50 @@
 
 ## 當前工作重點
 
-目前的工作重點包括：
-1. 將 Glasskube 套件庫從使用本地檔案伺服器轉換為直接使用 GitHub raw URL
-2. 建立系統架構圖以更好地理解和溝通系統組件和關係
+目前的工作重點已從基礎建設轉向 **Demo 環境的自動化與優化**：
+1.  建立 `edge-facility` 應用程式及其自動化發布流程。
+2  實現從 Git Tag 到 Glasskube 套件更新的完整 CI/CD 流水線。
+3.  優化應用程式 UI 以展示版本更新效果。
 
 ### 最近完成的變更
 
-1. **URL 更新** - 所有套件定義中的 URL 已從相對路徑更新為完整的 GitHub raw URLs
-   - 格式: `https://raw.githubusercontent.com/pkhsu/glasskube-package-test/main/apps/...`
-   - 這適用於 shiori 套件中的所有清單檔和 sample-web-app 的 Helm chart 位置
+1.  **Edge Facility 應用程式** - 基於 `sample-web-app` 創建了 `edge-facility`：
+    -   實作了 "Premium" Dashboard UI (Light Mode)。
+    -   支援動態顯示應用程式版本 (`APP_VERSION`)。
+    -   新增自訂 Icon 和 Footer。
 
-2. **移除 Caddy 伺服器** - 不再需要 `docker-caddy.sh` 腳本，因為我們現在直接從 GitHub 提供檔案
+2.  **CI/CD 自動化 (GitHub Actions)** - 建立了 `.github/workflows/ci.yml`：
+    -   **Docker Build**: 自動建置 Image 並推送到 GitHub Container Registry (GHCR)。
+    -   **Helm Packaging**: 自動打包 Helm Chart 並生成 `index.yaml` (建立標準 Helm Repo)。
+    -   **Glasskube Package**: 自動更新 `versions.yaml` 和 `package.yaml`。
+    -   **GitOps**: 自動將所有變更 Commit 回 `main` 分支。
 
-3. **文檔更新** - 更新了 `README.md` 以反映新的使用方式，包括:
-   - 使用 GitHub URL 添加套件庫
-   - 移除了啟動本地伺服器的部分
-   - 更新了故障排除指南
+3.  **Demo 自動化腳本** - 創建了 `scripts/demo-release.sh`：
+    -   一鍵完成 `git pull`, `commit`, `push`, `tag` 流程。
+    -   解決了本地與遠端分支的衝突問題。
 
-4. **系統架構圖** - 使用 C4 模型創建了高級系統架構圖：
-   - 採用 Mermaid 格式，可直接在 GitHub 上查看
-   - 定義了系統範圍、核心系統和外部系統
-   - 識別了關鍵使用者角色及其與系統的互動方式
-   - 位於 `documents/glasskube_architecture_diagram.md`
+4.  **基礎設施修復**：
+    -   修正 Helm Repository 結構，確保 `repositoryUrl` 指向包含 `index.yaml` 的有效位置。
+    -   將 Container Registry 從本地遷移至 GHCR 公開存取。
 
 ## 當前決策和考量
 
-1. **使用 GitHub raw URLs 的優勢**:
-   - 無需維護本地伺服器
-   - 套件庫可以直接分享給其他人使用
-   - 整合到 GitOps 工作流更加容易
+1.  **CI/CD 策略**:
+    -   使用 **Git Tags** (e.g., `v1.0.x`) 作為觸發點。
+    -   CI 流程負責所有構建產物 (Docker Image, Helm Chart) 的生成和發布。
+    -   CI 流程負責更新 Glasskube 套件定義，保持 Git 作為 Single Source of Truth。
 
-2. **架構設計考量**:
-   - 明確定義 Glasskube 應用程式在 Kubernetes 上的運行
-   - 區分 Glasskube 套件庫和應用程式的不同角色
-   - 使 Package Author 和 Package Client 的互動路徑清晰化
+2.  **Helm Repository 託管**:
+    -   利用 GitHub Raw (`raw.githubusercontent.com`) 託管 Helm Chart (`.tgz`) 和 `index.yaml`。
+    -   這要求 CI 流程必須在每次發布時重新生成 `index.yaml`。
 
-3. **系統範圍劃分**:
-   - 將核心 Glasskube 功能歸類在 System Scope
-   - 將監控功能獨立為 APM Scope
+3.  **Container Registry**:
+    -   使用 **GitHub Container Registry (GHCR)** 替代本地 Registry。
+    -   優點：與 GitHub Actions 整合無縫，且公開可存取，方便 Demo。
 
-4. **其他考量事項**:
-   - 確保 GitHub 儲存庫保持公開以允許訪問
-   - 確保分支名稱(main)在 URL 中正確指定
-   - 在進行任何變更時需要更新 raw URL
+4.  **Demo 流程優化**:
+    -   由於 GitHub Raw 和 Glasskube 之間存在快取延遲 (Cache Delay)，Demo 時需預留等待時間。
+    -   使用 `demo-release.sh` 腳本來標準化發布操作，減少人為錯誤。
 
 ## 學習和洞察
 
