@@ -9,7 +9,7 @@ longDescription: |
   ## Edge Facility
   A mock edge facility service for demonstration.
 
-iconUrl: https://lh3.googleusercontent.com/gg-dl/ABS2GSnsez8nM8djgO6gpdGKrW6TzQcyW68kDwq67Kpcwe-4IyLFRJeahDbLSdw0vgj67jkS-Lp0Jex7Ca5g-Hmt1Vxy9hVcjuvVenOfwnCW5mwFCTovVvnSGjqs9Sj17xPhz1WGV5XTamPAL2XBq4u86-K7ZDt7xFmTTbOEyqTLWqS1Cp2ebA=s1024-rj
+iconUrl: https://raw.githubusercontent.com/pkhsu/glasskube-package-test/main/glasskube-packages/packages/edge-facility/icon.jpg
 
 helm:
   chartName: edge-facility
