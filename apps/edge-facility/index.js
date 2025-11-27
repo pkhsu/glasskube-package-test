@@ -154,7 +154,7 @@ app.get('/', (req, res) => {
                 SYSTEM OPERATIONAL
             </div>
             
-            <h1>Edge Facility</h1>
+            <h1>Edge Facility Dashboard</h1>
             <p class="subtitle">${customMessage}</p>
 
             <div class="version-container">
