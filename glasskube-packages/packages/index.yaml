@@ -7,6 +7,6 @@ packages:
     # scope: Namespaced 
   - name: edge-facility
     iconUrl: https://cdn-icons-png.flaticon.com/512/919/919825.png
-    latestVersion: "v1.0.8+1"
+    latestVersion: "v1.0.9+1"
     shortDescription: Edge Facility Service
     scope: Namespaced 
