@@ -7,6 +7,6 @@ packages:
     # scope: Namespaced 
   - name: edge-facility
     iconUrl: https://raw.githubusercontent.com/pkhsu/glasskube-package-test/main/glasskube-packages/packages/edge-facility/icon.jpg
-    latestVersion: "v1.0.9+1"
+    latestVersion: "v1.0.10+1"
     shortDescription: Edge Facility Service
     scope: Namespaced 
