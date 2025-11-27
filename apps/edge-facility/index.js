@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Premium UI Route
 app.get('/', (req, res) => {
-  const html = `
+    const html = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +19,13 @@ app.get('/', (req, res) => {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.3);
-            --success-color: #4ade80;
+            --bg-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --accent-color: #0ea5e9;
+            --accent-glow: rgba(14, 165, 233, 0.2);
+            --success-color: #16a34a;
         }
 
         body {
@@ -53,12 +53,12 @@ app.get('/', (req, res) => {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 24px;
             padding: 4rem 6rem;
             box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
+                0 25px 50px -12px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
             animation: float 6s ease-in-out infinite;
             max-width: 600px;
             width: 100%;
@@ -104,7 +104,7 @@ app.get('/', (req, res) => {
             font-weight: 800;
             margin: 0 0 1rem 0;
             letter-spacing: -0.025em;
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #475569 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -170,38 +170,38 @@ app.get('/', (req, res) => {
 </body>
 </html>
   `;
-  res.send(html);
+    res.send(html);
 });
 
 // Simulate initiating a distribution task
 // In a real scenario, this would trigger Glasskube Distr or similar logic
 app.post('/distribute', (req, res) => {
-  const { packageName, targetCluster, version } = req.body;
+    const { packageName, targetCluster, version } = req.body;
 
-  if (!packageName || !targetCluster) {
-    return res.status(400).json({ error: 'packageName and targetCluster are required' });
-  }
-
-  console.log(`Simulating distribution request:`);
-  console.log(`  Package: ${packageName}`);
-  console.log(`  Version: ${version || 'latest'}`);
-  console.log(`  Target Cluster: ${targetCluster}`);
-
-  // Simulate asynchronous distribution process
-  setTimeout(() => {
-    console.log(`Distribution simulation complete for ${packageName} to ${targetCluster}`);
-  }, 1500);
-
-  res.status(202).json({
-    message: 'Distribution request received and simulation started.',
-    details: {
-      packageName,
-      version: version || 'latest',
-      targetCluster,
+    if (!packageName || !targetCluster) {
+        return res.status(400).json({ error: 'packageName and targetCluster are required' });
     }
-  });
+
+    console.log(`Simulating distribution request:`);
+    console.log(`  Package: ${packageName}`);
+    console.log(`  Version: ${version || 'latest'}`);
+    console.log(`  Target Cluster: ${targetCluster}`);
+
+    // Simulate asynchronous distribution process
+    setTimeout(() => {
+        console.log(`Distribution simulation complete for ${packageName} to ${targetCluster}`);
+    }, 1500);
+
+    res.status(202).json({
+        message: 'Distribution request received and simulation started.',
+        details: {
+            packageName,
+            version: version || 'latest',
+            targetCluster,
+        }
+    });
 });
 
 app.listen(port, () => {
-  console.log(`Edge Facility listening on port ${port}`);
+    console.log(`Edge Facility listening on port ${port}`);
 });
